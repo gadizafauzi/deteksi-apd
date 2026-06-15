@@ -13,6 +13,18 @@ PPEDetect adalah sistem cerdas berbasis *Computer Vision* yang secara otomatis m
 
 ---
 
+## Contoh Hasil Deteksi
+
+Berikut adalah contoh hasil prediksi *bounding box* dari model pada data validasi (*Validation Batch*):
+
+![Validation Batch](runs/detect/runs/detect/train/ppe_model/val_batch0_pred.jpg)
+
+Berikut adalah tampilan Antarmuka Web (UI) saat melakukan pemindaian APD secara langsung:
+
+![UI Screenshot](screenshot.png)
+
+---
+
 ## Hasil Evaluasi Training YOLOv8
 
 Model deteksi telah dilatih (di-*training*) menggunakan metode YOLOv8 dan menghasilkan evaluasi akurasi yang sangat baik. Berikut adalah beberapa metrik dan grafik hasil pelatihan dari model ini:
