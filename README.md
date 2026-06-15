@@ -1,10 +1,10 @@
-# PPEDetect - Deteksi Alat Pelindung Diri (APD) 👷‍♂️👷‍♀️
+# PPEDetect - Deteksi Alat Pelindung Diri (APD)
 
 PPEDetect adalah sistem cerdas berbasis *Computer Vision* yang secara otomatis mendeteksi penggunaan Alat Pelindung Diri (APD) seperti helm keselamatan (Helmet) dan rompi proyek (Vest) dari gambar. Proyek ini dibangun menggunakan **YOLOv8** untuk mendeteksi objek secara _real-time_ dan kerangka kerja **Flask** untuk antarmuka web.
 
 ---
 
-## 🎯 Fitur Utama
+## Fitur Utama
 
 - **Deteksi Otomatis:** Mengidentifikasi secara akurat letak Helm dan Rompi pada gambar yang diunggah.
 - **Validasi Kepatuhan:** Sistem akan menandai pengguna sebagai "Compliant" (Patuh) jika Helm dan Rompi terdeteksi, atau "Non-Compliant" jika ada yang kurang.
@@ -13,7 +13,7 @@ PPEDetect adalah sistem cerdas berbasis *Computer Vision* yang secara otomatis m
 
 ---
 
-## 📊 Hasil Evaluasi Training YOLOv8
+## Hasil Evaluasi Training YOLOv8
 
 Model deteksi telah dilatih (di-*training*) menggunakan metode YOLOv8 dan menghasilkan evaluasi akurasi yang sangat baik. Berikut adalah beberapa metrik dan grafik hasil pelatihan dari model ini:
 
@@ -39,7 +39,7 @@ Kurva PR menunjukkan hubungan *Precision* dan *Recall* pada berbagai tingkat thr
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## Teknologi yang Digunakan
 
 - **AI & Computer Vision:** Ultralytics YOLOv8, PyTorch, OpenCV
 - **Backend Framework:** Python Flask
@@ -48,7 +48,7 @@ Kurva PR menunjukkan hubungan *Precision* dan *Recall* pada berbagai tingkat thr
 
 ---
 
-## 🚀 Cara Menjalankan Aplikasi
+## Cara Menjalankan Aplikasi
 
 1. **Persiapan Environtment**
    Pastikan Anda sudah menginstal Python (>= 3.9). Sangat disarankan untuk menggunakan _virtual environment_.
