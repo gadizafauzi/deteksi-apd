@@ -21,7 +21,7 @@ Berikut adalah contoh hasil prediksi *bounding box* dari model pada data validas
 
 Berikut adalah tampilan Antarmuka Web (UI) saat melakukan pemindaian APD secara langsung:
 
-![UI Screenshot](screenshot.png)
+![UI hasil](hasil.png)
 
 ---
 
