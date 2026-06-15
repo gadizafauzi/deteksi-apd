@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+venv/
+env/
+ppe_database.db
+
+# Ignored Folders
+static/uploads/*
+static/runs/*
+!static/uploads/.gitkeep
+!static/runs/.gitkeep
+
+# Ignore datasets if they are large
+APD-1/
+
+# Ignore large YOLO model base weights
+yolo11n.pt

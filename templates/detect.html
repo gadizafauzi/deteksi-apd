@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan APD - PPEDetect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="/#beranda" class="logo">PPE<span>Detect</span></a>
+                <div class="nav-links">
+                    <a href="/#beranda">Beranda</a>
+                    <a href="/#tentang">Tentang</a>
+                    <a href="/#cara-kerja">Cara Kerja</a>
+                    <a href="/detect-page" class="active">Scan APD</a>
+                    <a href="/#dashboard">Dashboard</a>
+                </div>
+            </div>
+            <a href="/detect-page" class="btn-accent">Scan APD</a>
+        </div>
+    </nav>
+
+    <div class="container scroll-section">
+        <h2 class="section-title">Pemindaian Kepatuhan APD</h2>
+        <p class="section-subtitle">Sistem otomatis mendeteksi helm dan rompi dari gambar kamera.</p>
+
+        <div class="upload-wrapper">
+            <div class="card" style="padding: 2rem;">
+                
+                <div class="upload-box" id="uploadBox">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 8px;">Pilih Gambar atau Tarik Kesini</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Format didukung: JPG, JPEG, PNG</p>
+                    <input type="file" id="fileInput" accept="image/*">
+                </div>
+                
+                <div style="text-align: center;">
+                    <img id="imagePreview" src="" alt="Preview Gambar">
+                </div>
+                
+                <button id="detectBtn" class="btn-primary" style="width: 100%; padding: 1.2rem; font-size: 1.2rem; margin-top: 2rem; opacity: 0.5; pointer-events: none;">
+                    Mulai Deteksi
+                </button>
+                <div class="loader" id="loader"></div>
+
+                <!-- Hasil Deteksi -->
+                <div class="results-container" id="resultsContainer">
+                    <h3 style="font-family: 'Outfit', sans-serif; margin-bottom: 1.5rem; margin-top: 1rem; color: var(--primary-blue); border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Hasil Analisis YOLOv8</h3>
+                    
+                    <img id="resultImg" src="" alt="Hasil Deteksi Bounding Box">
+                    
+                    <div class="result-stats card" style="background-color: var(--bg-main);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-color); padding-bottom: 1rem;">
+                            <span style="font-weight: 600; color: var(--text-main); font-size: 1.1rem;">Status Kepatuhan:</span>
+                            <span id="statusBadge" class="badge" style="font-size: 1rem; padding: 8px 16px;">Menghitung...</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 0.5rem;">
+                            <span style="color: var(--text-muted); font-weight: 500;">Helmet (Helm):</span>
+                            <strong id="helmetCount" style="color: var(--primary-blue); font-size: 1.5rem;">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--text-muted); font-weight: 500;">Vest (Rompi):</span>
+                            <strong id="vestCount" style="color: var(--primary-blue); font-size: 1.5rem;">0</strong>
+                        </div>
+                    </div>
+                    
+                    <a href="/detect-page" class="btn-outline" style="width: 100%; margin-top: 2rem; text-align: center; display: block;">Scan Gambar Lain</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const detectBtn = document.getElementById('detectBtn');
+        const loader = document.getElementById('loader');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const resultImg = document.getElementById('resultImg');
+        const uploadBox = document.getElementById('uploadBox');
+        const imagePreview = document.getElementById('imagePreview');
+
+        let selectedFile = null;
+
+        // Preview Image and handle selection
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                selectedFile = e.target.files[0];
+                
+                // Show Preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'inline-block';
+                }
+                reader.readAsDataURL(selectedFile);
+
+                // Update UI
+                detectBtn.style.opacity = '1';
+                detectBtn.style.pointerEvents = 'auto';
+                uploadBox.style.borderColor = 'var(--success)';
+                uploadBox.style.background = 'rgba(16, 185, 129, 0.05)';
+                uploadBox.querySelector('h3').innerText = selectedFile.name;
+                uploadBox.querySelector('h3').style.color = 'var(--success)';
+            }
+        });
+
+        // Deteksi Action
+        detectBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            loader.style.display = 'block';
+            detectBtn.style.display = 'none';
+            resultsContainer.style.display = 'none';
+
+            try {
+                const response = await fetch('/detect', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    // Update Image with Cache Buster
+                    resultImg.src = data.result_url + '?t=' + new Date().getTime();
+                    
+                    // Update Stats
+                    document.getElementById('helmetCount').innerText = data.helmet_count;
+                    document.getElementById('vestCount').innerText = data.vest_count;
+                    
+                    const badge = document.getElementById('statusBadge');
+                    if(data.status === 'Compliant') {
+                        badge.className = 'badge compliant';
+                        badge.innerText = 'Compliant';
+                    } else {
+                        badge.className = 'badge non-compliant';
+                        badge.innerText = 'Non-Compliant';
+                    }
+
+                    resultsContainer.style.display = 'block';
+                    
+                    // Scroll to results smoothly
+                    setTimeout(() => {
+                        resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+
+                } else {
+                    alert(data.error || 'Terjadi kesalahan saat memproses gambar');
+                    detectBtn.style.display = 'block';
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Gagal menghubungi server.');
+                detectBtn.style.display = 'block';
+            } finally {
+                loader.style.display = 'none';
+            }
+        });
+    </script>
+    
+    <footer>
+        &copy; 2026 <strong>PPEDetect</strong>
+    </footer>
+</body>
+</html>

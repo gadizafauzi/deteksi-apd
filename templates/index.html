@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APDDetect - Pemantauan APD Berbasis AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="#beranda" class="logo">APD<span>Detect</span></a>
+                <div class="nav-links">
+                    <a href="#beranda">Beranda</a>
+                    <a href="#tentang">Tentang</a>
+                    <a href="#cara-kerja">Cara Kerja</a>
+                    <a href="/detect-page">Scan APD</a>
+                    <a href="#dashboard">Dashboard</a>
+                </div>
+            </div>
+            <a href="/detect-page" class="btn-accent">Scan APD</a>
+        </div>
+    </nav>
+
+    <!-- Halaman Beranda / Hero Section -->
+    <div id="beranda" class="container scroll-section">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>Sistem Pemantauan Kepatuhan Alat Pelindung Diri (APD) Berbasis AI</h1>
+                <p>Sistem berbasis Computer Vision yang membantu memantau kepatuhan penggunaan Alat Pelindung Diri (APD) secara otomatis untuk mendukung Keselamatan dan Kesehatan Kerja (K3).</p>
+                <div class="hero-buttons">
+                    <a href="/detect-page" class="btn-accent">Mulai Scan</a>
+                    <a href="#dashboard" class="btn-outline">Lihat Dashboard</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Mengapa APDDetect?</h2>
+        <p class="section-subtitle">
+            Keselamatan kerja merupakan aspek penting dalam industri, konstruksi, dan manufaktur. Namun proses pengawasan penggunaan APD secara manual sering kali tidak efisien, membutuhkan banyak tenaga pengawas, dan rentan terhadap human error.
+            <br><br>
+            <strong>APDDetect</strong> hadir sebagai solusi berbasis Artificial Intelligence yang mampu mendeteksi penggunaan helm keselamatan dan rompi reflektif secara otomatis melalui foto atau kamera.
+        </p>
+
+        <h2 class="section-title" style="margin-top: 4rem;">Manfaat Sistem</h2>
+        <div class="features-grid" style="margin-top: 2rem;">
+            <div class="card feature-card">
+                <h3>Monitoring Otomatis</h3>
+                <p>Melakukan pemeriksaan penggunaan APD tanpa pengawasan manual secara terus-menerus.</p>
+            </div>
+            <div class="card feature-card">
+                <h3>Deteksi Cepat</h3>
+                <p>Analisis gambar dilakukan dalam hitungan detik menggunakan model AI YOLOv8 mutakhir.</p>
+            </div>
+            <div class="card feature-card">
+                <h3>Rekap Data Digital</h3>
+                <p>Semua hasil deteksi tersimpan secara otomatis dan dapat ditinjau kembali di dashboard.</p>
+            </div>
+            <div class="card feature-card">
+                <h3>Mendukung Keselamatan</h3>
+                <p>Membantu meningkatkan tingkat kepatuhan pekerja terhadap standar regulasi K3.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Halaman Tentang -->
+    <div id="tentang" class="scroll-section" style="background-color: white;">
+        <div class="container">
+            <h2 class="section-title">Tentang Proyek</h2>
+            <div class="about-grid" style="margin-top: 3rem;">
+                <div class="about-text">
+                    <h3>Latar Belakang</h3>
+                    <p>Keselamatan dan Kesehatan Kerja (K3) merupakan aspek penting dalam lingkungan kerja berisiko tinggi seperti proyek konstruksi, manufaktur, dan pertambangan. Salah satu penyebab kecelakaan kerja adalah ketidakpatuhan pekerja dalam menggunakan Alat Pelindung Diri (APD).</p>
+                    <p>Pengawasan secara manual memiliki berbagai keterbatasan seperti:</p>
+                    <ul>
+                        <li>Human error (Kelelahan/Kelalaian)</li>
+                        <li>Keterbatasan jumlah pengawas di lapangan</li>
+                        <li>Sulit melakukan monitoring secara konsisten</li>
+                        <li>Dokumentasi inspeksi yang kurang efektif</li>
+                    </ul>
+                </div>
+                <div class="about-text">
+                    <h3>Solusi AI Terpadu</h3>
+                    <p>APDDetect memanfaatkan teknologi Computer Vision dan Deep Learning untuk memecahkan masalah tersebut dengan mendeteksi penggunaan secara real-time:</p>
+                    <ul>
+                        <li><strong>Safety Helmet</strong> (Helm Keselamatan)</li>
+                        <li><strong>Safety Vest</strong> (Rompi Keselamatan/Reflektif)</li>
+                    </ul>
+                    <p>secara otomatis melalui gambar yang diunggah pengguna ke sistem.</p>
+                    
+                    <h3>Tujuan Proyek</h3>
+                    <ul>
+                        <li>Meningkatkan kepatuhan penggunaan APD.</li>
+                        <li>Membantu petugas HSE melakukan pengawasan jarak jauh.</li>
+                        <li>Mengurangi risiko kecelakaan fatal di lingkungan kerja.</li>
+                        <li>Menyediakan dokumentasi digital dari hasil inspeksi.</li>
+                        <li>Mendukung implementasi budaya K3 berbasis teknologi terkini.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Halaman Cara Kerja -->
+    <div id="cara-kerja" class="container scroll-section">
+        <h2 class="section-title">Cara Kerja Sistem</h2>
+        <p class="section-subtitle">Alur bagaimana APDDetect memproses gambar hingga menghasilkan data kepatuhan K3 secara digital.</p>
+        
+        <div class="timeline" style="margin-top: 3rem;">
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h3>1. Upload Gambar</h3>
+                    <p>Pengguna mengunggah foto melalui halaman Scan APD.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h3>2. Proses AI</h3>
+                    <p>Gambar dikirim dengan aman ke backend server model AI.</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h3>3. Deteksi Objek</h3>
+                    <p>Model YOLO melakukan deteksi objek di seluruh piksel.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h3>4. Identifikasi APD</h3>
+                    <p>Sistem mengidentifikasi helm dan rompi pada setiap pekerja.</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h3>5. Verifikasi Kepatuhan</h3>
+                    <p>Sistem menentukan status kepatuhan (Compliant / Non-Compliant).</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h3>6. Penyimpanan Data</h3>
+                    <p>Hasil, metadata, dan waktu disimpan otomatis ke database.</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h3>7. Pembaruan Dashboard</h3>
+                    <p>Statistik dan tabel di Dashboard diperbarui secara seketika.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Halaman Dashboard -->
+    <div id="dashboard" class="scroll-section" style="background-color: white;">
+        <div class="container">
+            <h2 class="section-title">Dashboard Analitik Kepatuhan</h2>
+            <p class="section-subtitle">Ringkasan real-time dan histori deteksi keselamatan pekerja.</p>
+            
+            <div class="stats-grid">
+                <div class="card stat-card brand">
+                    <h3>Total Scan</h3>
+                    <div class="value" id="totalScans">0</div>
+                </div>
+                <div class="card stat-card success">
+                    <h3>Tingkat Kepatuhan</h3>
+                    <div class="value" id="complianceRate">0%</div>
+                </div>
+                <div class="card stat-card danger">
+                    <h3>Pelanggaran Terdeteksi</h3>
+                    <div class="value" id="nonCompliant">0</div>
+                </div>
+            </div>
+
+            <div class="card history-section">
+                <h3 style="font-family: 'Outfit'; font-size: 1.5rem; color: var(--primary-blue); margin-bottom: 1rem;">Riwayat Pemindaian Terbaru</h3>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Foto Hasil</th>
+                                <th>Waktu Pemindaian</th>
+                                <th>Status</th>
+                                <th>Detail Objek</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Memuat data database...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchDashboardData() {
+            try {
+                const res = await fetch('/api/dashboard');
+                const data = await res.json();
+                
+                if (data.success) {
+                    document.getElementById('totalScans').innerText = data.total_scans;
+                    document.getElementById('complianceRate').innerText = data.compliance_rate + '%';
+                    document.getElementById('nonCompliant').innerText = data.non_compliant;
+                    
+                    const tbody = document.getElementById('historyTableBody');
+                    tbody.innerHTML = '';
+                    
+                    if (data.history.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem;">Belum ada riwayat pemindaian APD.</td></tr>';
+                    } else {
+                        data.history.forEach(item => {
+                            const badgeClass = item.status === 'Compliant' ? 'compliant' : 'non-compliant';
+                            const dateStr = new Date(item.timestamp).toLocaleString('id-ID', {
+                                day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                            });
+                            
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
+                                <td><a href="${item.result_url}" target="_blank"><img src="${item.result_url}" alt="Hasil"></a></td>
+                                <td>${dateStr}</td>
+                                <td><span class="badge ${badgeClass}">${item.status === 'Compliant' ? 'Compliant' : 'Non-Compliant'}</span></td>
+                                <td style="color: var(--text-main); font-weight: 500;">Helm: ${item.helmet_count} | Rompi: ${item.vest_count}</td>
+                            `;
+                            tbody.appendChild(tr);
+                        });
+                    }
+                }
+            } catch (err) {
+                console.error("Gagal memuat data dashboard:", err);
+            }
+        }
+        
+        // Panggil saat halaman dimuat
+        fetchDashboardData();
+    </script>
+    
+    <footer>
+        &copy; 2026 <strong>PPEDetect</strong>
+    </footer>
+</body>
+</html>
